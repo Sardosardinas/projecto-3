@@ -4,11 +4,13 @@ import Navs from "../components/Navs";
 import data from "../data.json";
 import { Dropdown, Button } from "react-bootstrap"
 import API from "../utils/API"
+import { TableData } from "../components/TableData";
 class Tool extends Component {
 
     state = {
         Months: ["January", "February", "March"],
-        data
+        income: [],
+        expenses: []
     };
     // componentDidMount() {
     //     this.loadData();
@@ -33,9 +35,18 @@ class Tool extends Component {
         });
     };
 
-    createMonthData = monthData => {
+    newIncome = (name, value) => {
+        API.newIncome({
+            title: name,
+            amount: value
+        })
 
-        API.createMonth(monthData)
+    }
+
+    updateIncome = (name, value, month) => {
+        API.updateIncome({
+
+        })
     }
 
 
@@ -71,10 +82,25 @@ class Tool extends Component {
                                     </th>
                                 </tr>
                             </thead>
-                            {!this.state.data.month ? (
+                            {!this.state.income.length ? (
+                                <TableData />
+
+                            ) : (
+                                    <React.Fragment>
+                                        {this.income.map(income => (
+                                            <TableData
+                                                title={income.title}
+                                                amount={income.amount}
+                                                updateIncome={this.updateIncome}
+                                            />
+                                        ))}
+
+                                    </React.Fragment>
+                                )}
+                            {!this.state.expenses.length ? (
                                 <tbody>
                                     <tr>
-                                        <th >Income</th>
+                                        <th >Expenses</th>
                                         <th >Amount</th>
                                     </tr>
 
@@ -91,7 +117,24 @@ class Tool extends Component {
                                 </tbody>
 
                             ) : (
-                                    "Hello"
+                                    <tbody>
+                                        <tr>
+                                            <th >Expenses</th>
+                                            <th >Amount</th>
+                                        </tr>
+                                        {this.state.expenses.map(expenses => (
+                                            <React.Fragment>
+                                                <td><input className="form-control" name={expenses.title} value={expenses.title}></input></td>
+                                                <td><input className="form-control" name={expenses.amount} value={expenses.amount}></input></td>
+                                                {/* Felix  Aqui has el boton a la derecha porfa!! */}
+                                                <tr colspan="2">
+                                                    <Button className="">Add</Button>
+                                                </tr>
+                                            </React.Fragment>
+
+                                        ))}
+                                    </tbody>
+
                                 )}
 
 
@@ -102,7 +145,7 @@ class Tool extends Component {
 
                 </div >
 
-            </div>
+            </div >
 
         );
     }

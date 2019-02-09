@@ -3,18 +3,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 var ExpensesSchema = new Schema({
-    food: {
-		type: Number,
-		default: 0,
+	title: {
+		type: String,
+		required: true,
 	},
-	cable: {
+	amount: {
 		type: Number,
-		default: 0,
-	},
-	gas: {
-		type: Number,
-		default: 0,
-	},
+		required: true,
+	}
 })
 
 let Expenses = mongoose.model('Expenses', ExpensesSchema);

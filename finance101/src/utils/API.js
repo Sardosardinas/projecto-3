@@ -1,8 +1,11 @@
 import axios from "axios";
 
 export default {
-    createMonth: function (MonthData) {
-        return axios.post("api/Month", MonthData);
+    newIncome: function (incomeData) {
+        return axios.post("api/Month", incomeData);
+    },
+    updateIncome: function (incomeData) {
+        return axios.update("api/income", incomeData);
     }
     // saveBook: function (bookData) {
     //     console.log(bookData);
