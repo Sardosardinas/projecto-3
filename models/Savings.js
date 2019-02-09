@@ -1,22 +1,19 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
 var SavingsSchema = new Schema({
 	income: {
-		type: Number,
-		required: true,
+		type: Schema.Types.ObjectId,
+		ref: "Income"
 	},
-	expense: {
-		type: Number,
-		required: true,
-	},
-	savings: {
-		type: Number,
-		required: true,
-	}
+	expenses: {
+		type: Schema.Types.ObjectId,
+		ref: "Expenses"
+		}
+	
 })
 
-let Savings = mongoose.model('Savings', SavingsSchema)
+let Savings = mongoose.model('Savings', SavingsSchema);
 
-module.exports = Savings
+module.exports = Savings;
