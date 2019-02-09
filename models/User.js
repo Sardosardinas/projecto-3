@@ -16,9 +16,9 @@ var UserSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	age: {
-		type: Number,
-		required: true,
+	monthSavings: {
+		type: Schema.Types.ObjectId,
+		ref: "MonthSavings",
 	}
 })
 
