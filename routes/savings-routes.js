@@ -57,3 +57,24 @@ app.post("/articles/:id", function(req,res){
         res.json(err);
     });
 });
+//Create a new income using the "submit" object built from each added information
+app.get("/income", function(req, res){
+    db.Income.create(result)
+    .then(function (dbIncome){
+        console.log(dbIncome);
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+})
+
+//Create a new expense using the "submit" object built from each added information
+app.get("/expenses", function(req, res){
+    db.Expenses.create(result)
+    .then(function (dbExpenses){
+        console.log(dbExpenses);
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+})
