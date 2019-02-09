@@ -24,4 +24,4 @@ var MonthSavings = new Schema({
 
 var MonthSavings= mongoose.model("MonthSavings", MonthSavings);
 
-module.exports = MonthSavings;
+module.exports = MonthSavings
