@@ -1,6 +1,6 @@
 var mongojs = require('mongojs');
 var databaseUrl = 'user-database';
-var collections = ['User', 'Savings', 'Months', ];
+var collections = ['User',];
 
 var db = mongojs(databaseUrl, collections);
 db.on("error", function(error) {
