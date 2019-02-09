@@ -5,18 +5,18 @@ import { Button } from "react-bootstrap";
 
 
 
-export function TableData({ title, amount, month, updateIncome, handleChange, message }) {
+export function InputData(props) {
     return (
         <tbody>
 
             <tr>
-                <td >{title}</td>
-                <td >{amount}</td>
+                <td><input value={props.title} className="form-control"></input></td>
+                <td><input className="form-control"></input></td>
 
             </tr>
             {/* Felix  Aqui has el boton a la derecha porfa!! */}
             <tr colspan="2">
-                <Button className="" >{message}</Button>
+                <Button className="" >{props.message}</Button>
             </tr>
         </tbody>
     );

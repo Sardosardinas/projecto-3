@@ -1,16 +1,27 @@
 import React, { Component } from "react";
-
+import { TableData } from "../components/TableData";
+import { InputData } from "../components/InputData";
 import Navs from "../components/Navs";
 import data from "../data.json";
 import { Dropdown, Button } from "react-bootstrap"
 import API from "../utils/API"
-import { TableData } from "../components/TableData";
+
 class Tool extends Component {
 
     state = {
         Months: ["January", "February", "March"],
-        income: [],
-        expenses: []
+        income: [{
+            title: "xxx",
+            amount: "100"
+        }, {
+            title: "xxx",
+            amount: "100"
+        }
+        ],
+        expenses: [],
+        title: "",
+        amount: "",
+        new: "true"
     };
     // componentDidMount() {
     //     this.loadData();
@@ -28,10 +39,31 @@ class Tool extends Component {
     //         .catch(err => console.log(err));
     // };
 
+    handleSave = (status, title, amount) => {
+        if (status) {
+            API.newIncome({
+                title: title,
+                amount: amount
+            })
+        }
+        else {
+            API.updateIncome({
+                title: title,
+                amount: amount
+            })
+        }
+
+    }
+
     handleInputChange = event => {
         const { name, value } = event.target;
         this.setState({
+
             [name]: value
+
+
+
+
         });
     };
 
@@ -45,7 +77,9 @@ class Tool extends Component {
 
     updateIncome = (name, value, month) => {
         API.updateIncome({
-
+            name: name,
+            value: value,
+            month: month
         })
     }
 
@@ -83,17 +117,35 @@ class Tool extends Component {
                                 </tr>
                             </thead>
                             {!this.state.income.length ? (
-                                <TableData />
-
+                                <React.Fragment>
+                                    <tr>
+                                        <th >Income</th>
+                                        <th >Amount</th>
+                                    </tr>
+                                    <TableData />
+                                </React.Fragment>
                             ) : (
                                     <React.Fragment>
-                                        {this.income.map(income => (
+                                        <tr>
+                                            <th >Income</th>
+                                            <th >Amount</th>
+                                        </tr>
+                                        {this.state.income.map(income => (
                                             <TableData
                                                 title={income.title}
                                                 amount={income.amount}
-                                                updateIncome={this.updateIncome}
+                                                message={"Edit"}
                                             />
+
                                         ))}
+                                        <InputData
+                                            status={this.state.new}
+                                            title={this.state.title}
+                                            amount={this.state.amount}
+                                            message={"Save"}
+                                            handleSave={this.handleSave}
+                                        />
+
 
                                     </React.Fragment>
                                 )}
