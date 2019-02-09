@@ -3,15 +3,19 @@ const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 const IncomeSchema = new Schema ({
+    month: {
+        type: Schema.Types.ObjectId,
+        ref: "MonthSavings"
+    },
     title: {
         type: String,
-        required: true,
+        required: true
     },
     amount: {
         type: Number,
-        required: true,
+        required: true
     }
-})
+});
 
 let Income = mongoose.model('Income', IncomeSchema);
 

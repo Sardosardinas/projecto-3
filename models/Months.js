@@ -3,11 +3,14 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var MonthSavings = new Schema({
-
+	user: { 
+		type: Schema.Types.ObjectId,
+		ref: "User"
+	},
     month: { 
-        type: String,
-        required: true,
-    },
+      type: String,
+      required: true,
+  },
     savedSavings: {
 		type: Boolean,
 		default: false

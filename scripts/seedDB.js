@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const db = require("../models");
 
 mongoose.connect(
-    process.env.MONGODB_URI || "mongod://localhost/finance101"
+    process.env.MONGODB_URI || "mongodb://localhost/finance101"
 );
 
 const userSeed =[   
@@ -73,7 +73,7 @@ db.User
 .remove({})
 .then(() => db.User.collection.insertMany(userSeed))
 .then(data => {
-    console.log(data.result.n + "users inserted!");
+    console.log(data.result + "users inserted!");
     process.exit(0);
 })
 .catch(err => {
@@ -85,7 +85,7 @@ db.MonthSavings
 .remove({})
 .then(() => db.MonthSavings.insertMany(monthSeeds))
 .then(data => {
-    console.log(data.result.n + "month seeds inserted!");
+    console.log(data.result + "month seeds inserted!");
     process.exit(0);
 })
 .catch(err =>{
@@ -97,7 +97,7 @@ db.Income
 .remove({})
 .then(() => db.Income.insertMany(incomeSeed))
 .then(data => {
-    console.log(data.result.n + "income seeds inserted!");
+    console.log(data.result + "income seeds inserted!");
     process.exit(0);
 })
 .catch(err => {
@@ -109,7 +109,7 @@ db.Expenses
 .remove({})
 .then(() => db.Expenses.insertMany(expensesSeed))
 .then(data => {
-    console.log(data.result.n + "expenses seeds inserted!");
+    console.log(data.result + "expenses seeds inserted!");
     process.exit(0);
 })
 .catch(err => {
