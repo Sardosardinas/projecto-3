@@ -12,10 +12,14 @@ var MonthSavings = new Schema({
 		type: Boolean,
 		default: false
 	},
-    savings: {
-    type: Schema.Types.ObjectId,
-    ref: "Savings"
-    }
+    income: {
+		type: Schema.Types.ObjectId,
+		ref: "Income"
+	},
+	expenses: {
+		type: Schema.Types.ObjectId,
+		ref: "Expenses"
+	}
 });
 
 var MonthSavings= mongoose.model("MonthSavings", MonthSavings);
