@@ -1,13 +1,27 @@
 import React, { Component } from "react";
-import Table from "react-bootstrap/Table"
+import { TableData } from "../components/TableData";
+import { InputData } from "../components/InputData";
 import Navs from "../components/Navs";
 import data from "../data.json";
-
+import { Dropdown, Button } from "react-bootstrap"
+import API from "../utils/API"
 
 class Tool extends Component {
 
     state = {
-        data
+        Months: ["January", "February", "March"],
+        income: [{
+            title: "xxx",
+            amount: "100"
+        }, {
+            title: "xxx",
+            amount: "100"
+        }
+        ],
+        expenses: [],
+        title: "",
+        amount: "",
+        new: "true"
     };
     // componentDidMount() {
     //     this.loadData();
@@ -25,45 +39,55 @@ class Tool extends Component {
     //         .catch(err => console.log(err));
     // };
 
+    handleSave = (status, title, amount) => {
+        if (status) {
+            API.newIncome({
+                title: title,
+                amount: amount
+            })
+        }
+        else {
+            API.updateIncome({
+                title: title,
+                amount: amount
+            })
+        }
+
+    }
+
     handleInputChange = event => {
         const { name, value } = event.target;
         this.setState({
+
             [name]: value
+
+
+
+
         });
     };
 
-    // handleFormSubmit = event => {
-    //     event.preventDefault();
-    //     if (this.state.title && this.state.author) {
-    //         API.saveBook({
-    //             title: this.state.title,
-    //             author: this.state.author,
-    //             synopsis: this.state.synopsis
-    //         })
-    //             .then(res => this.loadBooks())
-    //             .catch(err => console.log(err));
-    //     }
-    // };
+    newIncome = (name, value) => {
+        API.newIncome({
+            title: name,
+            amount: value
+        })
 
-    handleInputChange(el) {
-        let inputName = el.target.name;
-        let inputValue = el.target.value;
-
-        let statusCopy = Object.assign({}, this.state);
-        statusCopy.formInputs[inputName].value = inputValue;
-
-        this.setState(statusCopy);
     }
+
+    updateIncome = (name, value, month) => {
+        API.updateIncome({
+            name: name,
+            value: value,
+            month: month
+        })
+    }
+
+
 
     render() {
 
-        // // CALCULOS
-        // const aIncome = ((this.state.iJan + this.state.iFeb + this.state.iMar + this.state.iApr + this.state.iMay + this.state.iJun
-        //     + this.state.iJul + this.state.iAgo + this.state.iSep + this.state.iOct + this.state.iNov + this.state.iDec) / 12);
 
-        // const aExpenses = ((this.state.eJan + this.state.eFeb + this.state.eMar + this.state.eApr + this.state.eMay + this.state.eJun
-        //     + this.state.eJul + this.state.eAgo + this.state.eSep + this.state.eOct + this.state.eNov + this.state.eDec) / 12);
-        console.log(data);
 
         return (
             <div>
@@ -75,59 +99,105 @@ class Tool extends Component {
                     </div>
                     <div>
                         <table className="table">
-                            {this.state.data.map(Month => (
+                            <thead>
+                                <tr>
+                                    <th colspan="2" >
+                                        <Dropdown>
+                                            <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                                Dropdown Button
+                                         </Dropdown.Toggle>
+
+                                            <Dropdown.Menu>
+                                                {this.state.Months.map(month => (
+                                                    <Dropdown.Item /*onClick={this.getData(month)} */>{month}</Dropdown.Item>
+                                                ))}
+                                            </Dropdown.Menu>
+                                        </Dropdown>
+                                    </th>
+                                </tr>
+                            </thead>
+                            {!this.state.income.length ? (
                                 <React.Fragment>
-                                    <thead>
-
-                                        <th className="col-xs-12">{Month.month}</th>
-
-                                    </thead>
-                                    <tbody>
-
-                                        <th className="col-xs-6">Income</th>
-                                        <th className="col-xs-6">Amount</th>
-
-
-                                        {Object.keys(Month.income).map((key, i) => (
-                                            <React.Fragment>
-
-                                                <tr>
-                                                    <td className="col-xs-3" onChange={this.handleInputChange}><input className="form-control" value={key}></input></td>
-                                                    <td className="col-xs-3" ><input className="form-control" onChange={this.handleInputChange} name={key} value={Month.income[key]} ></input></td>
-                                                </tr>
-
-                                            </React.Fragment>
-                                        )
-
-                                        )}
+                                    <tr>
+                                        <th >Income</th>
+                                        <th >Amount</th>
+                                    </tr>
+                                    <TableData />
+                                </React.Fragment>
+                            ) : (
+                                    <React.Fragment>
                                         <tr>
-                                            <th className="col-xs-3"> Expenses</th>
-                                            <th className="col-xs-3">Amount</th>
+                                            <th >Income</th>
+                                            <th >Amount</th>
                                         </tr>
-                                        {Object.keys(Month.expenses).map((key, i) => (
-                                            <React.Fragment>
+                                        {this.state.income.map(income => (
+                                            <TableData
+                                                title={income.title}
+                                                amount={income.amount}
+                                                message={"Edit"}
+                                            />
 
-                                                <tr>
-                                                    <td className="col-xs-3" onChange={this.handleInputChange}><input className="form-control" value={key}></input></td>
-                                                    <td className="col-xs-3" onChange={this.handleInputChange}><input className="form-control" name={key} value={Month.expenses[key]} ></input></td>
+                                        ))}
+                                        <InputData
+                                            status={this.state.new}
+                                            title={this.state.title}
+                                            amount={this.state.amount}
+                                            message={"Save"}
+                                            handleSave={this.handleSave}
+                                        />
+
+
+                                    </React.Fragment>
+                                )}
+                            {!this.state.expenses.length ? (
+                                <tbody>
+                                    <tr>
+                                        <th >Expenses</th>
+                                        <th >Amount</th>
+                                    </tr>
+
+                                    <tr>
+                                        <td><input className="form-control"></input></td>
+                                        <td><input className="form-control"></input></td>
+
+                                    </tr>
+                                    {/* Felix  Aqui has el boton a la derecha porfa!! */}
+                                    <tr colspan="2">
+                                        <Button className="">Add</Button>
+                                    </tr>
+
+                                </tbody>
+
+                            ) : (
+                                    <tbody>
+                                        <tr>
+                                            <th >Expenses</th>
+                                            <th >Amount</th>
+                                        </tr>
+                                        {this.state.expenses.map(expenses => (
+                                            <React.Fragment>
+                                                <td><input className="form-control" name={expenses.title} value={expenses.title}></input></td>
+                                                <td><input className="form-control" name={expenses.amount} value={expenses.amount}></input></td>
+                                                {/* Felix  Aqui has el boton a la derecha porfa!! */}
+                                                <tr colspan="2">
+                                                    <Button className="">Add</Button>
                                                 </tr>
                                             </React.Fragment>
-                                        )
 
-                                        )}
-
+                                        ))}
                                     </tbody>
 
-                                </React.Fragment>
+                                )}
 
-                            ))}
+
+
                         </table>
 
                     </div>
 
                 </div >
 
-            </div>
+            </div >
 
         );
     }
