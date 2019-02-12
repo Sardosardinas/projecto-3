@@ -16,7 +16,7 @@ export function TableData({ title, amount, month, updateIncome, handleChange, me
             </tr>
             {/* Felix  Aqui has el boton a la derecha porfa!! */}
             <tr colspan="2">
-                <Button className="" >{message}</Button>
+                {/* <Button onClick={} >{message}</Button> */}
             </tr>
         </tbody>
     );
