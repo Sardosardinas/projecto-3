@@ -10,8 +10,8 @@ export function InputData(props) {
         <tbody>
 
             <tr>
-                <td><input value={props.title} className="form-control"></input></td>
-                <td><input className="form-control"></input></td>
+                <td><input onChange={props.handleChange} name={"title"} value={props.title} className="form-control"></input></td>
+                <td><input onChange={props.handleChange} name={"amount"} value={props.amount} className="form-control"></input></td>
 
             </tr>
             {/* Felix  Aqui has el boton a la derecha porfa!! */}

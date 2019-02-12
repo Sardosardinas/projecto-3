@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { TableData } from "../components/TableData";
 import { InputData } from "../components/InputData";
 import Navs from "../components/Navs";
-import data from "../data.json";
 import { Dropdown, Button } from "react-bootstrap"
 import API from "../utils/API"
 
@@ -21,7 +20,7 @@ class Tool extends Component {
         expenses: [],
         title: "",
         amount: "",
-        new: "true"
+        new: true
     };
     // componentDidMount() {
     //     this.loadData();
@@ -58,12 +57,7 @@ class Tool extends Component {
     handleInputChange = event => {
         const { name, value } = event.target;
         this.setState({
-
             [name]: value
-
-
-
-
         });
     };
 
@@ -143,7 +137,7 @@ class Tool extends Component {
                                             title={this.state.title}
                                             amount={this.state.amount}
                                             message={"Save"}
-                                            handleSave={this.handleSave}
+                                            handleChange={this.handleInputChange}
                                         />
 
 
