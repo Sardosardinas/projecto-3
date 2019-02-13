@@ -9,13 +9,13 @@ var ExpensesSchema = new Schema({
     },
     title: {
         type: String,
-        required: true
+        required: true,
     },
     amount: {
         type: Number,
-        required: true
+        required: true,
     }
-});
+})
 
 let Expenses = mongoose.model('Expenses', ExpensesSchema);
 
