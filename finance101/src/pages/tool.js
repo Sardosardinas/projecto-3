@@ -4,6 +4,9 @@ import { InputData } from "../components/InputData";
 import Navs from "../components/Navs";
 import { Dropdown, Button } from "react-bootstrap"
 import API from "../utils/API"
+import data from "../data.json";
+import Sidebar from "../components/Sidebar/Sidebar";
+
 
 class Tool extends Component {
 
@@ -61,6 +64,8 @@ class Tool extends Component {
             <div>
                 <Navs />
                 <br />
+                <div className="row">
+                <Sidebar />
                 <div className="container">
                     <div className="alert alert-primary">
                         <h2>PERSONAL FINANCE</h2>
@@ -167,6 +172,8 @@ class Tool extends Component {
                 </div >
 
             </div >
+                </div>
+            
 
         );
     }
