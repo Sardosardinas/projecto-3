@@ -2,33 +2,35 @@ import React, { Component } from "react";
 
 import { Jumbotron, Card, Button, Form, Container, Col } from "react-bootstrap"
 
+class Register extends Component {
 
-class Login extends Component {
+    state = {
+
+    }
+
     render() {
 
         return (
             <div>
-
                 <Container>
                     <Card>
-                        <Card.Title>User Login</Card.Title>
+                        <Card.Title>Register new User</Card.Title>
                         <Card.Body>
                             <Form>
-                                <Form.Group controlID="UserLogin">
+                                <Form.Group controlID="RegisterUser">
                                     <Form.Label>Email</Form.Label>
                                     <Form.Control type="email" placeholder="Enter email" />
+                                    <Form.Group controlId="formBasicPassword">
+                                        <Form.Label>Password</Form.Label>
+                                        <Form.Control type="password" placeholder="Password" />
+                                    </Form.Group>
                                 </Form.Group>
-                                <Form.Group controlId="formBasicPassword">
-                                    <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" placeholder="Password" />
-                                </Form.Group>
-
                             </Form>
                         </Card.Body>
                         <Col md={{ span: 4, offset: 4 }} >
 
                             <Button variant="primary" type="submit">
-                                Login
+                                Register
                         </Button>
 
                         </Col>
@@ -41,4 +43,4 @@ class Login extends Component {
 
 }
 
-export default Login;
+export default Register;
