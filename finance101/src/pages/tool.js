@@ -37,7 +37,6 @@ class Tool extends Component {
                 amount: amount
             })
         }
-
     }
 
     handleInputChange = event => {
@@ -84,6 +83,18 @@ class Tool extends Component {
                                     </th>
                                 </tr>
                             </thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Amount</th>
+                            </tr>
+                            <InputData
+                                status={this.state.new}
+                                title={this.state.title}
+                                amount={this.state.amount}
+                                message={"Save"}
+                                handleChange={this.handleInputChange}
+                            />
+
                             {!this.state.income.length ? (
                                 <React.Fragment>
                                     <tr>
@@ -107,13 +118,7 @@ class Tool extends Component {
                                             />
 
                                         ))}
-                                        <InputData
-                                            status={this.state.new}
-                                            title={this.state.title}
-                                            amount={this.state.amount}
-                                            message={"Save"}
-                                            handleChange={this.handleInputChange}
-                                        />
+
 
 
                                     </React.Fragment>
