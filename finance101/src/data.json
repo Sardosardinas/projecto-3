@@ -1,6 +1,6 @@
 [
     {
-        "month": "Jan",
+        "month": "January",
         "income": {
             "work": "100"
         },
@@ -8,6 +8,17 @@
             "food": "20",
             "cable": "30",
             "gas": "50"
+        }
+    },
+    {
+        "month": "February",
+        "income": {
+            "work": "150"
+        },
+        "expenses": {
+            "food": "30",
+            "cable": "30",
+            "gas": "40"
         }
     }
 ]
