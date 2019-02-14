@@ -12,7 +12,7 @@ class App extends Component {
 
           <Switch>
             <Route exact path="/tool" component={Tool} />
-            <Route exact path="/login" component={Login} />
+            <Route exact path="/" component={Login} />
             <Route component={NoMatch} />
           </Switch>
         </div>
