@@ -1,18 +1,29 @@
 const router = require("express").Router();
 const db = require("../../models")
+var passport = require("../../config/passport");
 
-
-router.route("/user")
+router.route("/signup")
     .post((req, res) => {
-        console.log(req.body)
+        
         db.User.create(req.body)
-            .then(function (dbUser) {
-                console.log(dbUser);
+            .then(function () {
+                res.redirect(307, "/api/login");
             })
             .catch(function (err) {
                 console.log(err);
             });
-        res.send("User Created")
+
+    });
+
+router.route("/login")
+    .post(passport.authenticate("local"), (req, res) => {
+        res.json("/tool")
+    });
+router.route("/logout")
+    .get((req, res) => {
+        req.logout();
+        res.redirect("/");
+
     });
 
 router.route("/Month")

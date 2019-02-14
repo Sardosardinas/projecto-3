@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default {
     newUser: function (userData) {
-        return axios.post("api/user", userData)
+        return axios.post("api/signup", userData)
     },
     newIncome: function (incomeData) {
         return axios.post("api/Month", incomeData);
