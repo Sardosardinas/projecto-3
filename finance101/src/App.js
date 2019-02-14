@@ -10,6 +10,7 @@ import Login from "../src/pages/Login"
 import Register from "../src/pages/Register/Register"
 
 
+
 const fakeAuth = {
   isAuthenticated: false,
   authenticate(cb) {
@@ -38,6 +39,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 
 
 
+
 class App extends Component {
 
   state = {
@@ -48,6 +50,7 @@ class App extends Component {
   render() {
     return (
       <Router>
+
         <div>
           <ul>
             <li><Link to='/public'>Public Page</Link></li>
@@ -57,6 +60,7 @@ class App extends Component {
           <Route path='/public' component={Public} />
           <Route path='/' component={Login} />
           <PrivateRoute path='/protected' component={Protected} />
+
         </div>
       </Router>
     );
