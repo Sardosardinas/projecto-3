@@ -2,13 +2,19 @@ import React, { Component } from "react";
 import { TableData } from "../components/TableData";
 import { InputData } from "../components/InputData";
 import Navs from "../components/Navs";
-import { Dropdown, Button } from "react-bootstrap"
-import API from "../utils/API"
-import data from "../data.json";
+
+import { Dropdown, Button } from "react-bootstrap";
+import API from "../utils/API";
+
+
+
+
+
 import Sidebar from "../components/Sidebar/Sidebar";
 
 
 class Tool extends Component {
+
 
     state = {
         Months: ["January", "February", "March"],
@@ -40,7 +46,6 @@ class Tool extends Component {
                 amount: amount
             })
         }
-
     }
 
     handleInputChange = event => {
@@ -56,6 +61,7 @@ class Tool extends Component {
             amount: amount
         })
     }
+
 
 
     render() {
@@ -89,6 +95,18 @@ class Tool extends Component {
                                     </th>
                                 </tr>
                             </thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Amount</th>
+                            </tr>
+                            <InputData
+                                status={this.state.new}
+                                title={this.state.title}
+                                amount={this.state.amount}
+                                message={"Save"}
+                                handleChange={this.handleInputChange}
+                            />
+
                             {!this.state.income.length ? (
                                 <React.Fragment>
                                     <tr>
@@ -112,13 +130,7 @@ class Tool extends Component {
                                             />
 
                                         ))}
-                                        <InputData
-                                            status={this.state.new}
-                                            title={this.state.title}
-                                            amount={this.state.amount}
-                                            message={"Save"}
-                                            handleChange={this.handleInputChange}
-                                        />
+
 
 
                                     </React.Fragment>
