@@ -5,7 +5,7 @@ import { Button } from "react-bootstrap";
 
 
 
-export function TableData({ title, amount, month, updateIncome, handleChange, message }) {
+export function TableData({ title, amount, month, updateIncome, handleChange, message, handleEdit }) {
     return (
         <tbody>
 
@@ -16,7 +16,7 @@ export function TableData({ title, amount, month, updateIncome, handleChange, me
             </tr>
             {/* Felix  Aqui has el boton a la derecha porfa!! */}
             <tr colspan="2">
-                {/* <Button onClick={} >{message}</Button> */}
+                <Button onClick={() => handleEdit(title, amount)} >{message}</Button>
             </tr>
         </tbody>
     );

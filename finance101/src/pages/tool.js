@@ -74,11 +74,11 @@ class Tool extends Component {
     state = {
         Months: ["January", "February", "March"],
         income: [{
-            title: "xxx",
-            amount: "100"
+            title: "Work",
+            amount: "200"
         }, {
-            title: "xxx",
-            amount: "100"
+            title: "Side-Job",
+            amount: "50"
         }
         ],
         expenses: [],
@@ -86,21 +86,7 @@ class Tool extends Component {
         amount: "",
         new: true
     };
-    // componentDidMount() {
-    //     this.loadData();
-    // }
 
-    // loadBooks = () => {
-    //     API.getBudget()
-    //         .then(res => this.setState({ books: res.data, title: "", author: "", synopsis: "" }))
-    //         .catch(err => console.log(err));
-    // };
-
-    // deleteBook = id => {
-    //     API.deleteBook(id)
-    //         .then(res => this.loadBooks())
-    //         .catch(err => console.log(err));
-    // };
 
     handleSave = (status, title, amount) => {
         if (status) {
@@ -115,7 +101,6 @@ class Tool extends Component {
                 amount: amount
             })
         }
-
     }
 
     handleInputChange = event => {
@@ -125,28 +110,16 @@ class Tool extends Component {
         });
     };
 
-    newIncome = (name, value) => {
-        API.newIncome({
-            title: name,
-            amount: value
-        })
-
-    }
-
-    updateIncome = (name, value, month) => {
-        API.updateIncome({
-            name: name,
-            value: value,
-            month: month
+    handleEdit = (title, amount) => {
+        this.setState({
+            title: title,
+            amount: amount
         })
     }
 
    
 
-
     render() {
-
-
 
         return (
             <div>
@@ -175,6 +148,18 @@ class Tool extends Component {
                                     </th>
                                 </tr>
                             </thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Amount</th>
+                            </tr>
+                            <InputData
+                                status={this.state.new}
+                                title={this.state.title}
+                                amount={this.state.amount}
+                                message={"Save"}
+                                handleChange={this.handleInputChange}
+                            />
+
                             {!this.state.income.length ? (
                                 <React.Fragment>
                                     <tr>
@@ -194,16 +179,11 @@ class Tool extends Component {
                                                 title={income.title}
                                                 amount={income.amount}
                                                 message={"Edit"}
+                                                handleEdit={this.handleEdit}
                                             />
 
                                         ))}
-                                        <InputData
-                                            status={this.state.new}
-                                            title={this.state.title}
-                                            amount={this.state.amount}
-                                            message={"Save"}
-                                            handleChange={this.handleInputChange}
-                                        />
+
 
 
                                     </React.Fragment>

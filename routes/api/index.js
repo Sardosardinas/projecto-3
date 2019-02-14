@@ -4,7 +4,7 @@ const db = require("../../models")
 
 router.route("/user")
     .post((req, res) => {
-
+        console.log(req.body)
         db.User.create(req.body)
             .then(function (dbUser) {
                 console.log(dbUser);
