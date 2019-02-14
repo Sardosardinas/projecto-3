@@ -13,8 +13,9 @@ class App extends Component {
 
           <Switch>
             <Route exact path="/tool" component={Tool} />
-            <Route exact path="/login" component={Login} />
+            <Route exact path="/" component={Login} />
             <Route exact path="/register" component={Register} />
+
             <Route component={NoMatch} />
           </Switch>
         </div>
