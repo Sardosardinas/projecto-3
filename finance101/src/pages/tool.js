@@ -4,72 +4,11 @@ import { InputData } from "../components/InputData";
 import Navs from "../components/Navs";
 import { Dropdown, Button } from "react-bootstrap";
 import API from "../utils/API";
-import{
-    BrowserRouter as Router,
-    Route,
-    Link,
-    Redirect
-} from 'react-router-dom';
+
 //import { set } from "mongoose";
-
-const fakeAuth={
-    isAuthenticated: false,
-    authenticate(cb) {
-        this.isAuthenticated= true
-        setTimeout(cb, 100)
-    },
-    signout(cb) {
-        this.isAuthenticated= false
-        setTimeout(cb,100)
-    }
-}
-
-const Public = () => <h3>Public</h3>
-const Protected = () => <h3>Protected</h3>
-
-class Login extends React.Component{
-    render() {
-        return(
-            <div>
-                LOGIN
-            </div>
-        )
-    }
-}
-
-const PrivateRoute =({component: Component, ...rest}) => (
- <Route {...rest} render = {(props) => (
-     fakeAuth.isAuthenticated === true
-     ? <Component {...props}/>
-     : <Redirect to='/Login' />
- )}/>
-)
-
-class App extends React.Component {
-    render() {
-        return(
-            <Router>
-                <div>
-                    <ul>
-                        <li><Link to='/public'>Public Page</Link></li>
-                        <li><Link to='/Protected'>Protected Page</Link></li>
-                    </ul>
-
-                    <Route path='/public' component = {Public}/>
-                    <Route path='/Login' component = {Login}/>
-                    <PrivateRoute path ='/protected' component= {Protected}/>
-                </div>
-            </Router>
-        )
-    }
-}
 
 class Tool extends Component {
 
-    userState = {
-        username: "sardoSardinas",
-        password: "1234",
-    };
 
     state = {
         Months: ["January", "February", "March"],
@@ -117,7 +56,7 @@ class Tool extends Component {
         })
     }
 
-   
+
 
     render() {
 
