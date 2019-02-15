@@ -4,10 +4,10 @@ var passport = require("../../config/passport");
 
 router.route("/signup")
     .post((req, res) => {
-        
+
         db.User.create(req.body)
             .then(function () {
-                res.redirect(307, "/api/login");
+                res.json("Authenticated");
             })
             .catch(function (err) {
                 console.log(err);
@@ -16,27 +16,27 @@ router.route("/signup")
     });
 
 router.route("/login")
+
     .post(passport.authenticate("local"), (req, res) => {
-        res.json("/tool")
+
+        if (req.user) {
+
+            res.sendStatus(200)
+        }
+        else {
+
+            res.sendStatus(502)
+        }
+
     });
+
 router.route("/logout")
     .get((req, res) => {
+        console.log(req)
         req.logout();
-        res.redirect("/");
+        res.sendStatus(200);
 
     });
 
-/*router.route("/Month")
-    .post((req, res) => {
-
-        db.Month.create(req.body)
-            .then(function (dbUser) {
-                console.log(dbUser);
-            })
-            .catch(function (err) {
-                console.log(err);
-            });
-        res.send("Month added")
-    });*/
 
 module.exports = router;

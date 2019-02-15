@@ -17,7 +17,7 @@ app.use(passport.session());
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("finance101/build"));
+  app.use(express.static("client/build"));
 }
 app.use(routes);
 
@@ -28,4 +28,4 @@ app.listen(PORT, () => {
   console.log(`🌎 ==> API server now on port ${PORT}!`);
 });
 
-module.exports= app;
+module.exports = app;

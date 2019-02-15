@@ -7,12 +7,13 @@ passport.use(new LocalStrategy(
     {
         usernameField: "email"
     },
+
     function (email, password, done) {
-        db.User.findOne({
-            where: {
+        db.User.findOne(
+            {
                 email: email
             }
-        }).then(function (dbUser) {
+        ).then(function (dbUser) {
             if (!dbUser) {
                 return done(null, false, {
                     message: "Incorrect email."
