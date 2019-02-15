@@ -32,6 +32,7 @@ router.route("/login")
 
 router.route("/logout")
     .get((req, res) => {
+        console.log(req)
         req.logout();
         res.sendStatus(200);
 
