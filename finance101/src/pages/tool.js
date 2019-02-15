@@ -76,7 +76,7 @@ class Tool extends Component {
                 <br />
                 <div className="row">
                     <Sidebar />
-                    <div className="container">
+                    <div className="container" style={{width: '65%', marginTop: '50px'}}>
                         <div className="alert alert-primary">
                             <h2>PERSONAL FINANCE</h2>
                         </div>
