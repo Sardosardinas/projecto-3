@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   BrowserRouter as Router, Route, Link,
-  Redirect
+  Redirect, Switch
 } from "react-router-dom"
 import './App.css';
 import Tool from "./pages/tool"
@@ -20,9 +20,11 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Route exact path='/register' component={Register} />
-          <Route exact path='/' component={Login} />
-          <Route exact path='/tool' component={Tool} />
+          <Switch>
+            <Route exact path='/register' component={Register} />
+            <Route exact path='/' component={Login} />
+            <Route exact path='/tool' component={Tool} />
+          </Switch>
         </div>
       </Router>
     );
