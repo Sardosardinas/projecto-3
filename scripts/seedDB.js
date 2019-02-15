@@ -9,7 +9,27 @@ const userSeed =[
 {
     name: "areyna", 
     email: "ejemplo@gmail.com", 
-    password: "1234"
+    password: "1234",
+    income: [
+        {
+            title: "freelance", 
+            amount: 3000
+        },
+        {
+            title: "freelance", 
+            amount: 3000
+        }
+    ],
+    expenses:[
+        {
+            title: "food", 
+            amount: 3000
+        },
+        {
+            title: "food", 
+            amount: 3000
+        }
+    ]
 },
 {
     name: "weekend", 
@@ -23,20 +43,7 @@ const userSeed =[
 }
 ];
 
-const monthSeeds = [
-{
-    month: "January",
-    savedSavings: true
-},
-{
-    month: "June",
-    savedSavings: false
-},
-{
-    month: "July",
-    savedSavings: true
-}
-];
+
 
 const incomeSeed=[
 {
@@ -81,17 +88,6 @@ db.User
     process.exit(1);
 });
 
-db.MonthSavings
-.remove({})
-.then(() => db.MonthSavings.insertMany(monthSeeds))
-.then(data => {
-    console.log(data.result + "month seeds inserted!");
-    process.exit(0);
-})
-.catch(err =>{
-    console.error(err);
-    process.exit(1);
-});
 
 db.Income
 .remove({})

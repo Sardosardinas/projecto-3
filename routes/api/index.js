@@ -26,7 +26,7 @@ router.route("/logout")
 
     });
 
-router.route("/Month")
+/*router.route("/Month")
     .post((req, res) => {
 
         db.Month.create(req.body)
@@ -37,6 +37,6 @@ router.route("/Month")
                 console.log(err);
             });
         res.send("Month added")
-    });
+    });*/
 
 module.exports = router;
