@@ -9,5 +9,8 @@ export default {
     },
     userData: function () {
         return axios.get("api/userdata")
+    },
+    logoutUser: function () {
+        return axios.get("api/logout")
     }
 };

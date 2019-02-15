@@ -20,28 +20,20 @@ router.route("/login")
     .post(passport.authenticate("local"), (req, res) => {
 
         if (req.user) {
-            console.log("hi")
-            //res.redirect("google.com")
-            res.send(200)
+
+            res.sendStatus(200)
         }
         else {
-            console.log("hi23")
-            res.send(502)
+
+            res.sendStatus(502)
         }
 
-    });
-router.route("/login")
-
-    .get((req, res) => {
-        if (req.user) {
-
-        }
     });
 
 router.route("/logout")
     .get((req, res) => {
         req.logout();
-        res.redirect("/");
+        res.sendStatus(200);
 
     });
 
