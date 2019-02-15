@@ -13,14 +13,26 @@ var UserSchema = new Schema({
 		unique: true,
 		required: true,
 	},
-	password: {
-		type: String,
-		required: true,
-	},
-	monthSavings: {
-		type: Schema.Types.ObjectId,
-		ref: "MonthSavings",
-	}
+    income: [{
+		title: [{
+			type: String,
+			required: true
+		}],
+		amount: [{
+			type: Number,
+			required: true
+		}]
+	}],
+	expenses: [{
+		title: [{
+			type: String,
+			required: true,
+		}],
+		amount: [{
+			type: Number,
+			required: true,
+		}]
+	}]
 })
 
 UserSchema.methods.validPassword = function (password) {
