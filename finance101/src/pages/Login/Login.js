@@ -23,7 +23,8 @@ class Login extends Component {
         API.loginUser({ email: this.state.email, password: this.state.password })
             .then(res => {
                 console.log(res)
-                if (res.status === "200") {
+                if (res.status === 200) {
+
                     this.setState({ isAuthenticated: true })
                 }
 
@@ -31,7 +32,7 @@ class Login extends Component {
             }).catch(err => console.log(err));
     };
     renderRedirect = () => {
-        if (!this.state.isAuthenticated) {
+        if (this.state.isAuthenticated) {
             return <Redirect to='/tool' />
         }
     }
