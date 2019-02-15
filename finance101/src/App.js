@@ -20,7 +20,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Route exact path='/public' component={Register} />
+          <Route exact path='/register' component={Register} />
           <Route exact path='/' component={Login} />
           <Route exact path='/tool' component={Tool} />
         </div>
