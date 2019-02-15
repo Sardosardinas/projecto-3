@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Jumbotron, Card, Button, Form, Container, Col, Alert } from "react-bootstrap"
+import { Button, Form } from "react-bootstrap"
 import API from "../../utils/API"
 import { Redirect } from "react-router-dom"
 class Login extends Component {
@@ -31,7 +31,7 @@ class Login extends Component {
             }).catch(err => console.log(err));
     };
     renderRedirect = () => {
-        if (!this.state.isAuthenticated) {
+        if (this.state.isAuthenticated) {
             return <Redirect to='/tool' />
         }
     }
@@ -41,31 +41,21 @@ class Login extends Component {
         return (
             <div>
                 {this.renderRedirect()}
-                <Container>
-                    <Card>
-                        <Card.Title>User Login</Card.Title>
-                        <Card.Body>
-                            <Form>
-                                <Form.Group controlID="UserLogin">
-                                    <Form.Label>Email</Form.Label>
-                                    <Form.Control type="email" name="email" onChange={this.handleInputChange} placeholder="Enter email" />
-                                </Form.Group>
-                                <Form.Group controlId="formBasicPassword">
-                                    <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" name="password" onChange={this.handleInputChange} placeholder="Password" />
-                                </Form.Group>
-                                <Button onClick={this.login} variant="primary" type="submit">
-                                    Login
-        </Button >
-                            </Form>
-                        </Card.Body>
-                        <Col md={{ span: 4, offset: 4 }} >
-
-
-
-                        </Col>
-                    </Card>
-                </Container>
+                <form class="form-signin">
+                <h1 class="h3 mb-3 font-weight-normal">User Login</h1>                
+                <Form.Group controlID="RegisterUser">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control onChange={this.handleInputChange} name={"email"} value={this.state.email} type="email" placeholder="Enter email" />
+                </Form.Group>
+                <Form.Group controlId="formBasicPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control onChange={this.handleInputChange} name={"password"} value={this.state.password} type="password" placeholder="Password" />
+                </Form.Group>               
+                <Button onClick={this.handleFormSubmit} variant="primary" type="submit">
+                    Register
+                </Button>                                               
+                </form>
+            
 
             </div>
 
