@@ -26,6 +26,10 @@ class Tool extends Component {
         new: true
     };
 
+    componentDidMount() {
+        API.userData()
+    }
+
 
     handleSave = (status, title, amount) => {
         if (status) {
