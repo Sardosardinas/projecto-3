@@ -45,5 +45,20 @@ router.route("/logout")
 
     });
 
+<<<<<<< HEAD
+=======
+/*router.route("/Month")
+    .post((req, res) => {
+
+        db.Month.create(req.body)
+            .then(function (dbUser) {
+                console.log(dbUser);
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+        res.send("Month added")
+    });*/
+>>>>>>> 271e31328e4c88794e71bf73f7834884c0cf8d2a
 
 module.exports = router;
