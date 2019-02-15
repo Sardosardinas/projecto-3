@@ -13,7 +13,11 @@ var UserSchema = new Schema({
 		unique: true,
 		required: true,
 	},
-    income: [{
+	password: {
+		type: String,
+		required: true,
+	},
+	income: [{
 		title: [{
 			type: String,
 			required: true

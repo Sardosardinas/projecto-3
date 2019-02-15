@@ -2,6 +2,8 @@ import React from 'react';
 import API from "../utils/API"
 import { Redirect } from "react-router-dom"
 export default class Navs extends React.Component {
+
+
   constructor(props) {
     super(props);
 
@@ -10,7 +12,9 @@ export default class Navs extends React.Component {
       isOpen: false,
       isAuthenticated: true
     };
+
   }
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
