@@ -57,9 +57,18 @@ class Login extends Component {
                         <Form.Label>Password</Form.Label>
                         <Form.Control onChange={this.handleInputChange} name={"password"} value={this.state.password} type="password" placeholder="Password" />
                     </Form.Group>
+                    <div className="row">
+                    <div className="col-md-6">
                     <Button onClick={this.login} variant="primary" type="submit">
                         Login
-                </Button>
+                    </Button>
+                    </div>
+                    <div className="col-md-6">
+                    <Button variant="success">
+                        Register
+                    </Button>
+                    </div>
+                    </div>
                 </form>
 
 
