@@ -20,8 +20,16 @@ export default {
         return axios.put("api/updateIncome", incomeData)
     },
     deleteIncome: function (incomeData) {
-        console.log("hi")
         return axios.put("api/deleteIncome", incomeData)
-    }
+    },
+    newExpense: function (expenseData) {
+        return axios.put("api/userExpense", expenseData)
+    },
+    updateExpense: function (expenseData) {
+        return axios.put("api/updateExpense", expenseData)
+    },
+    deleteExpense: function (expenseData) {
+        return axios.put("api/deleteExpense", expenseData)
+    },
 
 };
