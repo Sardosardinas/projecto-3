@@ -5,7 +5,7 @@ import { Button, Row, Col } from "react-bootstrap";
 
 
 
-export function TableData({ title, amount, message, handleEdit, id, handleDelete, type }) {
+export function TableData({ title, amount, message, handleEdit, id, handleDelete, type, handleTotal }) {
     return (
         <div>
             <Row className={"mt-4"}>

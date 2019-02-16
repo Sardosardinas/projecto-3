@@ -16,13 +16,16 @@ class Tool extends Component {
         title: "",
         _id: "",
         amount: null,
-        type: ""
+        type: "",
+        itotal: "",
+        etotal: ""
 
     };
 
     componentDidMount() {
         API.userData().then(res => {
-            console.log(res.data)
+
+            console.log(res)
             this.setState({
                 income: res.data[0].income,
                 expenses: res.data[0].expenses
@@ -144,7 +147,9 @@ class Tool extends Component {
         })
 
     }
+    iTotal = () => {
 
+    }
     render() {
 
         return (
@@ -186,12 +191,14 @@ class Tool extends Component {
                                                         <Row>
                                                             <Col md={4}>Income</Col>
                                                             <Col md={4}>Amount</Col>
-                                                            <Col md={4}>TOTAL: <b>income</b></Col>
+                                                            <Col md={4}>TOTAL: <b>{this.state.itotal}</b></Col>
                                                         </Row>
 
 
                                                         {this.state.income.map(income => (
                                                             <TableData
+                                                                handleTotal={this.handleIncomeIncrement}
+                                                                type={"income"}
                                                                 id={income._id}
                                                                 title={income.title}
                                                                 amount={income.amount}
@@ -210,7 +217,7 @@ class Tool extends Component {
                                         )}
                                 </div>
                                 <div className="col-md-6">
-                                    {!this.state.income.length ? (
+                                    {!this.state.expenses.length ? (
                                         <React.Fragment>
                                             <Container>
                                                 <Col md={6} >
@@ -231,11 +238,12 @@ class Tool extends Component {
                                                         </Row>
 
 
-                                                        {this.state.income.map(income => (
+                                                        {this.state.expenses.map(expense => (
                                                             <TableData
-                                                                id={income._id}
-                                                                title={income.title}
-                                                                amount={income.amount}
+                                                                type={"expense"}
+                                                                id={expense._id}
+                                                                title={expense.title}
+                                                                amount={expense.amount}
                                                                 message={"Edit"}
                                                                 handleEdit={this.handleEdit}
                                                                 handleDelete={this.handleDelete}

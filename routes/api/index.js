@@ -6,7 +6,7 @@ router.route("/signup")
     .post((req, res) => {
         db.User.create(req.body)
             .then(function () {
-                res.json("Authenticated");
+                res.sendStatus(200)
             })
             .catch(function (err) {
                 console.log(err);
@@ -15,7 +15,7 @@ router.route("/signup")
 router.route("/login")
     .post(passport.authenticate("local"), (req, res) => {
         if (req.user) {
-            console.log(req.user)
+
             res.sendStatus(200)
         }
         else {
@@ -60,7 +60,7 @@ router.route("/userData")
                 });
         }
         else {
-            res.sendStatus(502)
+            res.sendStatus(401)
         }
     });
 router.route("/updateIncome")
