@@ -16,21 +16,25 @@ class Tool extends Component {
         title: "",
         _id: "",
         amount: null,
+        type: ""
 
     };
 
     componentDidMount() {
         API.userData().then(res => {
             console.log(res.data)
-            this.setState({ income: res.data[0].income })
+            this.setState({
+                income: res.data[0].income,
+                expenses: res.data[0].expenses
+            })
         })
             .catch(err => console.log(err));
     }
 
 
     handleSave = () => {
-        console.log(this.state.amount)
-        if (this.state._id) {
+        console.log(this.state.transType)
+        if (this.state._id && this.state.type === "income") {
             API.updateIncome({
                 _id: this.state._id,
                 title: this.state.title,
@@ -39,6 +43,21 @@ class Tool extends Component {
                 if (res.status === 200) {
                     API.userData().then(res =>
                         this.setState({ income: res.data[0].income, title: "", amount: "" })
+                    )
+
+                }
+            })
+                .catch(err => console.log(err));
+        }
+        else if (this.state._id && this.state.type === "expense") {
+            API.updateExpense({
+                _id: this.state._id,
+                title: this.state.title,
+                amount: this.state.amount
+            }).then(res => {
+                if (res.status === 200) {
+                    API.userData().then(res =>
+                        this.setState({ expenses: res.data[0].expenses, title: "", amount: "" })
                     )
 
                 }
@@ -60,6 +79,22 @@ class Tool extends Component {
 
                 .catch(err => console.log(err));
         }
+        else if (this.state.transType === "expense") {
+            console.log("hi")
+            API.newExpense({
+                title: this.state.title,
+                amount: this.state.amount
+            }).then(res => {
+                if (res.status === 200) {
+                    API.userData().then(res =>
+                        this.setState({ expenses: res.data[0].expenses, title: "", amount: "" })
+                    )
+
+                }
+            })
+
+                .catch(err => console.log(err));
+        }
     }
 
     handleInputChange = event => {
@@ -69,24 +104,38 @@ class Tool extends Component {
         });
     };
 
-    handleEdit = (title, amount, id) => {
+    handleEdit = (title, amount, id, type) => {
         this.setState({
             title: title,
             amount: amount,
-            _id: id
+            _id: id,
+            type: type
         })
     }
 
-    handleDelete = (id) => {
-        API.deleteIncome({ id }).then(res => {
-            if (res.status === 200) {
-                API.userData().then(res =>
-                    this.setState({ income: res.data[0].income, title: "", amount: "" })
-                )
+    handleDelete = (id, type) => {
+        if (type === "income") {
+            API.deleteIncome({ id }).then(res => {
+                if (res.status === 200) {
+                    API.userData().then(res =>
+                        this.setState({ income: res.data[0].income, title: "", amount: "" })
+                    )
 
-            }
-        })
-            .catch(err => console.log(err));
+                }
+            })
+                .catch(err => console.log(err));
+        }
+        else if (type === "expense") {
+            API.deleteExpense({ id }).then(res => {
+                if (res.status === 200) {
+                    API.userData().then(res =>
+                        this.setState({ expenses: res.data[0].expenses, title: "", amount: "" })
+                    )
+
+                }
+            })
+                .catch(err => console.log(err));
+        }
     }
 
     transactionType = (evt, eventKey) => {
@@ -121,84 +170,86 @@ class Tool extends Component {
 
                             />
                             <div className="row">
-                            <div className="col-md-6">
-                            {!this.state.income.length ? (
-                                <React.Fragment>
-                                    <Container>
-                                        <Col md={6} >
-                                            <Col className="text-center" >No income to show</Col>
-                                        </Col>
-                                    </Container>
-                                </React.Fragment>
-                            ) : (
-                                    <React.Fragment>
-                                        <Container>
-                                            <Col>
-                                                <Row>
-                                                    <Col md={6}>Income</Col>
-                                                    <Col md={6}>Amount</Col>
-                                                </Row>
+                                <div className="col-md-6">
+                                    {!this.state.income.length ? (
+                                        <React.Fragment>
+                                            <Container>
+                                                <Col md={6} >
+                                                    <Col className="text-center" >No income to show</Col>
+                                                </Col>
+                                            </Container>
+                                        </React.Fragment>
+                                    ) : (
+                                            <React.Fragment>
+                                                <Container>
+                                                    <Col>
+                                                        <Row>
+                                                            <Col md={6}>Income</Col>
+                                                            <Col md={6}>Amount</Col>
+                                                        </Row>
 
 
-                                                {this.state.income.map(income => (
-                                                    <TableData
-                                                        id={income._id}
-                                                        title={income.title}
-                                                        amount={income.amount}
-                                                        message={"Edit"}
-                                                        handleEdit={this.handleEdit}
-                                                        handleDelete={this.handleDelete}
+                                                        {this.state.income.map(income => (
+                                                            <TableData
+                                                                type={"income"}
+                                                                id={income._id}
+                                                                title={income.title}
+                                                                amount={income.amount}
+                                                                message={"Edit"}
+                                                                handleEdit={this.handleEdit}
+                                                                handleDelete={this.handleDelete}
 
-                                                    />
+                                                            />
 
-                                                ))}
-
-
-                                            </Col>
-                                        </Container>
-                                    </React.Fragment>
-                                )}
-                            </div>
-                            <div className="col-md-6">                          
-                            {!this.state.income.length ? (
-                                <React.Fragment>
-                                    <Container>
-                                        <Col md={6} >
-                                            <Col className="text-center" >No income to show</Col>
-                                        </Col>
-
-                                    </Container>
-
-                                </React.Fragment>
-                            ) : (
-                                    <React.Fragment>
-                                        <Container>
-                                            <Col>
-                                                <Row>
-                                                    <Col md={6}>Income</Col>
-                                                    <Col md={6}>Amount</Col>
-                                                </Row>
+                                                        ))}
 
 
-                                                {this.state.income.map(income => (
-                                                    <TableData
-                                                        id={income._id}
-                                                        title={income.title}
-                                                        amount={income.amount}
-                                                        message={"Edit"}
-                                                        handleEdit={this.handleEdit}
-                                                        handleDelete={this.handleDelete}
+                                                    </Col>
+                                                </Container>
+                                            </React.Fragment>
+                                        )}
+                                </div>
+                                <div className="col-md-6">
+                                    {!this.state.expenses.length ? (
+                                        <React.Fragment>
+                                            <Container>
+                                                <Col md={6} >
+                                                    <Col className="text-center" >No expenses to show</Col>
+                                                </Col>
 
-                                                    />
+                                            </Container>
 
-                                                ))}
+                                        </React.Fragment>
+                                    ) : (
+                                            <React.Fragment>
+                                                <Container>
+                                                    <Col>
+                                                        <Row>
+                                                            <Col md={6}>Expense</Col>
+                                                            <Col md={6}>Amount</Col>
+                                                        </Row>
 
 
-                                            </Col>
-                                        </Container>
-                                    </React.Fragment>
-                                )}
-                                </div>  
+                                                        {this.state.expenses.map(expense => (
+                                                            <TableData
+                                                                type={"expense"}
+                                                                id={expense._id}
+                                                                title={expense.title}
+                                                                amount={expense.amount}
+                                                                message={"Edit"}
+                                                                handleEdit={this.handleEdit}
+                                                                handleDelete={this.handleDelete}
+
+                                                            />
+
+                                                        ))}
+
+
+                                                    </Col>
+                                                </Container>
+                                            </React.Fragment>
+                                        )}
+                                </div>
                             </div>
 
 
