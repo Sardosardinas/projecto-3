@@ -13,6 +13,7 @@ var UserSchema = new Schema({
 		unique: true,
 		required: true,
 	},
+
 	password: {
 		type: String,
 		required: true,
@@ -26,6 +27,7 @@ var UserSchema = new Schema({
 			type: String,
 			required: true
 		}
+
 	}],
 	expenses: [{
 		title: [{

@@ -7,6 +7,7 @@ var router = express.Router();
 
 //Route for getting all Month Savints from the db
 
+
 app.get("/user-savings", (req, res) => {
     db.User.find({})
         .then(function (dbUserSavings) {
@@ -70,6 +71,7 @@ app.post('/UserExpense', (req, res) => {
                 console.log('ERROR: Could not post to db');
             }
         })
+
 })
 
 app.delete('/deleteAllUsers', (req, res) => {
@@ -82,6 +84,7 @@ app.delete('/deleteAllUsers', (req, res) => {
             }
         })
 })
+
 
 app.delete('/deleteUser/:id', (req, res) => {
     let id = req.params.id
@@ -107,6 +110,7 @@ app.put('/updateIncomes/:id', (req, res) => {
         } else if (!update) {
             console.log("Could not update user income in db")
         }
+
     })
 })
 
