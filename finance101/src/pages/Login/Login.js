@@ -9,7 +9,7 @@ class Login extends Component {
         email: "",
         pasword: "",
         isAuthenticated: false,
-        modalShow: true
+        modalShow: false
     };
 
 
@@ -30,7 +30,13 @@ class Login extends Component {
                 }
 
 
-            }).catch(err => console.log(err));
+
+            }).catch(err => {
+
+                if (err.response.status === 401) {
+                    this.setState({ modalShow: true })
+                }
+            });
     };
     renderRedirect = () => {
         if (this.state.isAuthenticated) {
@@ -42,10 +48,10 @@ class Login extends Component {
         let modalClose = () => this.setState({ modalShow: false });
         return (
             <div>
-                          <MyVerticallyCenteredModal
-            show={this.state.modalShow}
-            onHide={modalClose}
-          />
+                <MyVerticallyCenteredModal
+                    show={this.state.modalShow}
+                    onHide={modalClose}
+                />
                 {this.renderRedirect()}
                 <form class="form-signin">
                     <h1 class="h3 mb-3 font-weight-normal">User Login</h1>
