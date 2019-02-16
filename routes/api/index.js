@@ -4,10 +4,10 @@ var passport = require("../../config/passport");
 
 router.route("/signup")
     .post((req, res) => {
-        
+
         db.User.create(req.body)
             .then(function () {
-                res.redirect(307, "/api/login");
+                res.json("Authenticated");
             })
             .catch(function (err) {
                 console.log(err);
@@ -16,9 +16,28 @@ router.route("/signup")
     });
 
 router.route("/login")
+
     .post(passport.authenticate("local"), (req, res) => {
-        res.json("/tool")
+
+        if (req.user) {
+            console.log("hi")
+            //res.redirect("google.com")
+            res.send(200)
+        }
+        else {
+            console.log("hi23")
+            res.send(502)
+        }
+
     });
+router.route("/login")
+
+    .get((req, res) => {
+        if (req.user) {
+
+        }
+    });
+
 router.route("/logout")
     .get((req, res) => {
         req.logout();
@@ -26,17 +45,5 @@ router.route("/logout")
 
     });
 
-/*router.route("/Month")
-    .post((req, res) => {
-
-        db.Month.create(req.body)
-            .then(function (dbUser) {
-                console.log(dbUser);
-            })
-            .catch(function (err) {
-                console.log(err);
-            });
-        res.send("Month added")
-    });*/
 
 module.exports = router;
