@@ -18,14 +18,14 @@ var UserSchema = new Schema({
 		required: true,
 	},
 	income: [{
-		title: [{
+		title: {
 			type: String,
 			required: true
-		}],
-		amount: [{
-			type: Number,
+		},
+		amount: {
+			type: String,
 			required: true
-		}]
+		}
 	}],
 	expenses: [{
 		title: [{

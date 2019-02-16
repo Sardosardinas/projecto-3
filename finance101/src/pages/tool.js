@@ -2,47 +2,63 @@ import React, { Component } from "react";
 import { TableData } from "../components/TableData";
 import { InputData } from "../components/InputData";
 import Navs from "../components/Navs";
-import { Dropdown, Button, Col, Container, Row } from "react-bootstrap";
+import { Dropdown, Button, Col, Container, Row, Alert } from "react-bootstrap";
 import API from "../utils/API";
 import Sidebar from "../components/Sidebar/Sidebar";
 
 
 class Tool extends Component {
 
-
     state = {
         transType: "Transaction",
-        income: [{
-            title: "day-job",
-            amount: 150
-        },
-        {
-            title: "side-job",
-            amount: 50
-        }],
+        income: [],
         expenses: [],
         title: "",
-        amount: "",
-        new: true
+        _id: "",
+        amount: null,
+
     };
 
     componentDidMount() {
-        API.userData()
+        API.userData().then(res => {
+            console.log(res.data)
+            this.setState({ income: res.data[0].income })
+        })
+            .catch(err => console.log(err));
     }
 
 
-    handleSave = (status, title, amount) => {
-        if (status) {
-            API.newIncome({
-                title: title,
-                amount: amount
-            })
-        }
-        else {
+    handleSave = () => {
+        console.log(this.state.amount)
+        if (this.state._id) {
             API.updateIncome({
-                title: title,
-                amount: amount
+                _id: this.state._id,
+                title: this.state.title,
+                amount: this.state.amount
+            }).then(res => {
+                if (res.status === 200) {
+                    API.userData().then(res =>
+                        this.setState({ income: res.data[0].income, title: "", amount: "" })
+                    )
+
+                }
             })
+                .catch(err => console.log(err));
+        }
+        else if (this.state.transType === "income") {
+            API.newIncome({
+                title: this.state.title,
+                amount: this.state.amount
+            }).then(res => {
+                if (res.status === 200) {
+                    API.userData().then(res =>
+                        this.setState({ income: res.data[0].income, title: "", amount: "" })
+                    )
+
+                }
+            })
+
+                .catch(err => console.log(err));
         }
     }
 
@@ -53,11 +69,24 @@ class Tool extends Component {
         });
     };
 
-    handleEdit = (title, amount) => {
+    handleEdit = (title, amount, id) => {
         this.setState({
             title: title,
-            amount: amount
+            amount: amount,
+            _id: id
         })
+    }
+
+    handleDelete = (id) => {
+        API.deleteIncome({ id }).then(res => {
+            if (res.status === 200) {
+                API.userData().then(res =>
+                    this.setState({ income: res.data[0].income, title: "", amount: "" })
+                )
+
+            }
+        })
+            .catch(err => console.log(err));
     }
 
     transactionType = (evt, eventKey) => {
@@ -66,8 +95,6 @@ class Tool extends Component {
         })
 
     }
-
-
 
     render() {
 
@@ -82,8 +109,6 @@ class Tool extends Component {
                             <h2>Monthly Budget</h2>
                         </div>
                         <div>
-
-
                             <InputData
                                 status={this.state.new}
                                 title={this.state.title}
@@ -92,12 +117,51 @@ class Tool extends Component {
                                 handleChange={this.handleInputChange}
                                 transType={this.transactionType}
                                 trans={this.state.transType}
+                                handleSave={this.handleSave}
+
                             />
 
                             {!this.state.income.length ? (
                                 <React.Fragment>
                                     <Container>
-                                        <Col>
+                                        <Col md={6} >
+                                            <Col className="text-center" >No income to show</Col>
+                                        </Col>
+                                    </Container>
+                                </React.Fragment>
+                            ) : (
+                                    <React.Fragment>
+                                        <Container>
+                                            <Col md={6}>
+                                                <Row>
+                                                    <Col md={6}>Income</Col>
+                                                    <Col md={6}>Amount</Col>
+                                                </Row>
+
+
+                                                {this.state.income.map(income => (
+                                                    <TableData
+                                                        id={income._id}
+                                                        title={income.title}
+                                                        amount={income.amount}
+                                                        message={"Edit"}
+                                                        handleEdit={this.handleEdit}
+                                                        handleDelete={this.handleDelete}
+
+                                                    />
+
+                                                ))}
+
+
+                                            </Col>
+                                        </Container>
+                                    </React.Fragment>
+                                )}
+
+                            {!this.state.income.length ? (
+                                <React.Fragment>
+                                    <Container>
+                                        <Col md={6} >
                                             <Col className="text-center" >No income to show</Col>
                                         </Col>
 
@@ -116,10 +180,13 @@ class Tool extends Component {
 
                                                 {this.state.income.map(income => (
                                                     <TableData
+                                                        id={income._id}
                                                         title={income.title}
                                                         amount={income.amount}
                                                         message={"Edit"}
                                                         handleEdit={this.handleEdit}
+                                                        handleDelete={this.handleDelete}
+
                                                     />
 
                                                 ))}

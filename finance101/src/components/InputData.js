@@ -19,16 +19,16 @@ export function InputData(props) {
                             id="input-group-dropdown-1"
                             onSelect={props.transType}
                         >
-                            <Dropdown.Item eventKey={"income"}  >Income</Dropdown.Item>
+                            <Dropdown.Item eventKey={"income"}>Income</Dropdown.Item>
                             <Dropdown.Divider />
-                            <Dropdown.Item eventKey="expense">Expense</Dropdown.Item>
+                            <Dropdown.Item eventKey={"expense"}>Expense</Dropdown.Item>
 
                         </DropdownButton>
                         <FormControl onChange={props.handleChange} placeholder="Description" type="text" name="title" value={props.title} />
 
                         <FormControl onChange={props.handleChange} placeholder="Amount" type="number" name="amount" value={props.amount} />
                         <InputGroup.Append>
-                            <Button variant="outline-secondary">Save</Button>
+                            <Button onClick={props.handleSave} variant="outline-secondary">Save</Button>
                         </InputGroup.Append>
                     </InputGroup>
                 </Col>
