@@ -5,8 +5,9 @@ import Navs from "../components/Navs";
 import { Dropdown, Button, Col, Container, Row, Alert } from "react-bootstrap";
 import API from "../utils/API";
 import Sidebar from "../components/Sidebar/Sidebar";
-
-
+let itotal = 0
+let etotal = 0
+let btotal = 1
 class Tool extends Component {
 
     state = {
@@ -17,8 +18,7 @@ class Tool extends Component {
         _id: "",
         amount: null,
         type: "",
-        itotal: "",
-        etotal: ""
+
 
     };
 
@@ -36,8 +36,8 @@ class Tool extends Component {
 
 
     handleSave = () => {
-        console.log(this.state.transType)
         if (this.state._id && this.state.type === "income") {
+            console.log("hi")
             API.updateIncome({
                 _id: this.state._id,
                 title: this.state.title,
@@ -45,7 +45,7 @@ class Tool extends Component {
             }).then(res => {
                 if (res.status === 200) {
                     API.userData().then(res =>
-                        this.setState({ income: res.data[0].income, title: "", amount: "" })
+                        this.setState({ income: res.data[0].income, title: "", amount: "", type: "" })
                     )
 
                 }
@@ -60,7 +60,7 @@ class Tool extends Component {
             }).then(res => {
                 if (res.status === 200) {
                     API.userData().then(res =>
-                        this.setState({ expenses: res.data[0].expenses, title: "", amount: "" })
+                        this.setState({ expenses: res.data[0].expenses, title: "", amount: "", type: "" })
                     )
 
                 }
@@ -74,7 +74,7 @@ class Tool extends Component {
             }).then(res => {
                 if (res.status === 200) {
                     API.userData().then(res =>
-                        this.setState({ income: res.data[0].income, title: "", amount: "" })
+                        this.setState({ income: res.data[0].income, title: "", amount: "", transType: "Transaction" })
                     )
 
                 }
@@ -90,7 +90,7 @@ class Tool extends Component {
             }).then(res => {
                 if (res.status === 200) {
                     API.userData().then(res =>
-                        this.setState({ expenses: res.data[0].expenses, title: "", amount: "" })
+                        this.setState({ expenses: res.data[0].expenses, title: "", amount: "", transType: "Transaction" })
                     )
 
                 }
@@ -153,7 +153,17 @@ class Tool extends Component {
     render() {
 
         return (
+
             <div>
+                {itotal = 0}
+                {etotal = 0}
+                {this.state.income.map(income => {
+                    itotal = itotal + parseInt(income.amount)
+                })}
+                {this.state.expenses.map(expense => {
+                    etotal = etotal + parseInt(expense.amount)
+                })}
+                {btotal = itotal - etotal}
                 <Navs />
                 <br />
                 <div className="row">
@@ -161,6 +171,7 @@ class Tool extends Component {
                     <div className="container" style={{ width: '65%', marginTop: '50px' }}>
                         <div className="alert alert-primary">
                             <h2>Monthly Budget</h2>
+                            <h4>Balance:{btotal}</h4>
                         </div>
                         <div>
                             <InputData
@@ -191,7 +202,7 @@ class Tool extends Component {
                                                         <Row>
                                                             <Col md={4}>Income</Col>
                                                             <Col md={4}>Amount</Col>
-                                                            <Col md={4}>TOTAL: <b>{this.state.itotal}</b></Col>
+                                                            <Col md={4}>TOTAL: <b>{itotal}</b></Col>
                                                         </Row>
 
 
@@ -221,7 +232,7 @@ class Tool extends Component {
                                         <React.Fragment>
                                             <Container>
                                                 <Col md={6} >
-                                                    <Col className="text-center" >No income to show</Col>
+                                                    <Col className="text-center" >No Expenses to show</Col>
                                                 </Col>
 
                                             </Container>
@@ -232,9 +243,9 @@ class Tool extends Component {
                                                 <Container>
                                                     <Col>
                                                         <Row>
-                                                            <Col md={4}>Income</Col>
+                                                            <Col md={4}>Expense</Col>
                                                             <Col md={4}>Amount</Col>
-                                                            <Col md={4}>TOTAL: <b>expense</b></Col>
+                                                            <Col md={4}>TOTAL: <b>{etotal}</b></Col>
                                                         </Row>
 
 
