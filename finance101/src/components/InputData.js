@@ -1,23 +1,38 @@
 import React from "react";
 
-import { Button } from "react-bootstrap";
-
+import { Button, Container, Col, InputGroup, FormControl, Dropdown, DropdownButton } from "react-bootstrap";
 
 
 
 export function InputData(props) {
+
+
     return (
-        <tbody>
+        <div>
+            <Container>
+                <Col>
+                    <InputGroup className="mb-3">
+                        <DropdownButton
+                            as={InputGroup.Prepend}
+                            variant="outline-secondary"
+                            title={props.trans}
+                            id="input-group-dropdown-1"
+                            onSelect={props.transType}
+                        >
+                            <Dropdown.Item eventKey={"income"}>Income</Dropdown.Item>
+                            <Dropdown.Divider />
+                            <Dropdown.Item eventKey={"expense"}>Expense</Dropdown.Item>
 
-            <tr>
-                <td><input onChange={props.handleChange} name={"title"} value={props.title} className="form-control"></input></td>
-                <td><input onChange={props.handleChange} name={"amount"} value={props.amount} className="form-control"></input></td>
+                        </DropdownButton>
+                        <FormControl onChange={props.handleChange} placeholder="Description" type="text" name="title" value={props.title} />
 
-            </tr>
-            {/* Felix  Aqui has el boton a la derecha porfa!! */}
-            <tr colspan="2">
-                <Button className="" >{props.message}</Button>
-            </tr>
-        </tbody>
+                        <FormControl onChange={props.handleChange} placeholder="Amount" type="number" name="amount" value={props.amount} />
+                        <InputGroup.Append>
+                            <Button onClick={props.handleSave} variant="outline-secondary">Save</Button>
+                        </InputGroup.Append>
+                    </InputGroup>
+                </Col>
+            </Container>
+        </div>
     );
 }

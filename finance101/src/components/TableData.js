@@ -1,23 +1,19 @@
 import React from "react";
 
-import { Button } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
 
 
 
 
-export function TableData({ title, amount, month, updateIncome, handleChange, message, handleEdit }) {
+export function TableData({ title, amount, message, handleEdit, id, handleDelete }) {
     return (
-        <tbody>
-
-            <tr>
-                <td >{title}</td>
-                <td >{amount}</td>
-
-            </tr>
-            {/* Felix  Aqui has el boton a la derecha porfa!! */}
-            <tr colspan="2">
-                <Button onClick={() => handleEdit(title, amount)} >{message}</Button>
-            </tr>
-        </tbody>
+        <div>
+            <Row className={"mt-4"}>
+                <Col md={4}>{title}</Col>
+                <Col md={4}>{amount}</Col>
+                <Col md={2}> <Button onClick={() => handleEdit(title, amount, id)} >{message}</Button></Col>
+                <Col md={2}> <Button variant="danger" onClick={() => handleDelete(id)} >Delete</Button></Col>
+            </Row>
+        </div>
     );
 }

@@ -2,53 +2,63 @@ import React, { Component } from "react";
 import { TableData } from "../components/TableData";
 import { InputData } from "../components/InputData";
 import Navs from "../components/Navs";
-
-import { Dropdown, Button } from "react-bootstrap";
+import { Dropdown, Button, Col, Container, Row, Alert } from "react-bootstrap";
 import API from "../utils/API";
-
-
-
-
-
 import Sidebar from "../components/Sidebar/Sidebar";
 
 
 class Tool extends Component {
 
-
     state = {
-        Months: ["January", "February", "March"],
-        income: [{
-            title: "Work",
-            amount: "200"
-        }, {
-            title: "Side-Job",
-            amount: "50"
-        }
-        ],
+        transType: "Transaction",
+        income: [],
         expenses: [],
         title: "",
-        amount: "",
-        new: true
+        _id: "",
+        amount: null,
+
     };
 
     componentDidMount() {
-        API.userData()
+        API.userData().then(res => {
+            console.log(res.data)
+            this.setState({ income: res.data[0].income })
+        })
+            .catch(err => console.log(err));
     }
 
 
-    handleSave = (status, title, amount) => {
-        if (status) {
-            API.newIncome({
-                title: title,
-                amount: amount
-            })
-        }
-        else {
+    handleSave = () => {
+        console.log(this.state.amount)
+        if (this.state._id) {
             API.updateIncome({
-                title: title,
-                amount: amount
+                _id: this.state._id,
+                title: this.state.title,
+                amount: this.state.amount
+            }).then(res => {
+                if (res.status === 200) {
+                    API.userData().then(res =>
+                        this.setState({ income: res.data[0].income, title: "", amount: "" })
+                    )
+
+                }
             })
+                .catch(err => console.log(err));
+        }
+        else if (this.state.transType === "income") {
+            API.newIncome({
+                title: this.state.title,
+                amount: this.state.amount
+            }).then(res => {
+                if (res.status === 200) {
+                    API.userData().then(res =>
+                        this.setState({ income: res.data[0].income, title: "", amount: "" })
+                    )
+
+                }
+            })
+
+                .catch(err => console.log(err));
         }
     }
 
@@ -59,14 +69,32 @@ class Tool extends Component {
         });
     };
 
-    handleEdit = (title, amount) => {
+    handleEdit = (title, amount, id) => {
         this.setState({
             title: title,
-            amount: amount
+            amount: amount,
+            _id: id
         })
     }
 
+    handleDelete = (id) => {
+        API.deleteIncome({ id }).then(res => {
+            if (res.status === 200) {
+                API.userData().then(res =>
+                    this.setState({ income: res.data[0].income, title: "", amount: "" })
+                )
 
+            }
+        })
+            .catch(err => console.log(err));
+    }
+
+    transactionType = (evt, eventKey) => {
+        this.setState({
+            transType: evt
+        })
+
+    }
 
     render() {
 
@@ -76,112 +104,105 @@ class Tool extends Component {
                 <br />
                 <div className="row">
                     <Sidebar />
-                    <div className="container">
+                    <div className="container" style={{ width: '65%', marginTop: '50px' }}>
                         <div className="alert alert-primary">
-                            <h2>PERSONAL FINANCE</h2>
+                            <h2>Monthly Budget</h2>
                         </div>
                         <div>
-                            <table className="table">
-                                <thead>
-                                    <tr>
-                                        <th colspan="2" >
-                                            <Dropdown>
-                                                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                                    Dropdown Button
-                                         </Dropdown.Toggle>
+                            <InputData
+                                status={this.state.new}
+                                title={this.state.title}
+                                amount={this.state.amount}
+                                message={"Save"}
+                                handleChange={this.handleInputChange}
+                                transType={this.transactionType}
+                                trans={this.state.transType}
+                                handleSave={this.handleSave}
 
-                                                <Dropdown.Menu>
-                                                    {this.state.Months.map(month => (
-                                                        <Dropdown.Item /*onClick={this.getData(month)} */>{month}</Dropdown.Item>
-                                                    ))}
-                                                </Dropdown.Menu>
-                                            </Dropdown>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tr>
-                                    <th>Description</th>
-                                    <th>Amount</th>
-                                </tr>
-                                <InputData
-                                    status={this.state.new}
-                                    title={this.state.title}
-                                    amount={this.state.amount}
-                                    message={"Save"}
-                                    handleChange={this.handleInputChange}
-                                />
+                            />
 
-                                {!this.state.income.length ? (
+                            {!this.state.income.length ? (
+                                <React.Fragment>
+                                    <Container>
+                                        <Col md={6} >
+                                            <Col className="text-center" >No income to show</Col>
+                                        </Col>
+                                    </Container>
+                                </React.Fragment>
+                            ) : (
                                     <React.Fragment>
-                                        <tr>
-                                            <th >Income</th>
-                                            <th >Amount</th>
-                                        </tr>
-                                        <TableData />
+                                        <Container>
+                                            <Col md={6}>
+                                                <Row>
+                                                    <Col md={6}>Income</Col>
+                                                    <Col md={6}>Amount</Col>
+                                                </Row>
+
+
+                                                {this.state.income.map(income => (
+                                                    <TableData
+                                                        id={income._id}
+                                                        title={income.title}
+                                                        amount={income.amount}
+                                                        message={"Edit"}
+                                                        handleEdit={this.handleEdit}
+                                                        handleDelete={this.handleDelete}
+
+                                                    />
+
+                                                ))}
+
+
+                                            </Col>
+                                        </Container>
                                     </React.Fragment>
-                                ) : (
-                                        <React.Fragment>
-                                            <tr>
-                                                <th >Income</th>
-                                                <th >Amount</th>
-                                            </tr>
-                                            {this.state.income.map(income => (
-                                                <TableData
-                                                    title={income.title}
-                                                    amount={income.amount}
-                                                    message={"Edit"}
-                                                    handleEdit={this.handleEdit}
-                                                />
+                                )}
 
-                                            ))}
+                            {!this.state.income.length ? (
+                                <React.Fragment>
+                                    <Container>
+                                        <Col md={6} >
+                                            <Col className="text-center" >No income to show</Col>
+                                        </Col>
+
+                                    </Container>
+
+                                </React.Fragment>
+                            ) : (
+                                    <React.Fragment>
+                                        <Container>
+                                            <Col md={6}>
+                                                <Row>
+                                                    <Col md={6}>Income</Col>
+                                                    <Col md={6}>Amount</Col>
+                                                </Row>
 
 
+                                                {this.state.income.map(income => (
+                                                    <TableData
+                                                        id={income._id}
+                                                        title={income.title}
+                                                        amount={income.amount}
+                                                        message={"Edit"}
+                                                        handleEdit={this.handleEdit}
+                                                        handleDelete={this.handleDelete}
 
-                                        </React.Fragment>
-                                    )}
-                                {!this.state.expenses.length ? (
-                                    <tbody>
-                                        <tr>
-                                            <th >Expenses</th>
-                                            <th >Amount</th>
-                                        </tr>
+                                                    />
 
-                                        <tr>
-                                            <td><input className="form-control"></input></td>
-                                            <td><input className="form-control"></input></td>
+                                                ))}
 
-                                        </tr>
-                                        {/* Felix  Aqui has el boton a la derecha porfa!! */}
-                                        <tr colspan="2">
-                                            <Button className="">Add</Button>
-                                        </tr>
 
-                                    </tbody>
-
-                                ) : (
-                                        <tbody>
-                                            <tr>
-                                                <th >Expenses</th>
-                                                <th >Amount</th>
-                                            </tr>
-                                            {this.state.expenses.map(expenses => (
-                                                <React.Fragment>
-                                                    <td><input className="form-control" name={expenses.title} value={expenses.title}></input></td>
-                                                    <td><input className="form-control" name={expenses.amount} value={expenses.amount}></input></td>
-                                                    {/* Felix  Aqui has el boton a la derecha porfa!! */}
-                                                    <tr colspan="2">
-                                                        <Button className="">Add</Button>
-                                                    </tr>
-                                                </React.Fragment>
-
-                                            ))}
-                                        </tbody>
-
-                                    )}
+                                            </Col>
+                                        </Container>
+                                    </React.Fragment>
+                                )}
 
 
 
-                            </table>
+
+
+
+
 
                         </div>
 
