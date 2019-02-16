@@ -135,8 +135,9 @@ class Tool extends Component {
                                         <Container>
                                             <Col>
                                                 <Row>
-                                                    <Col md={6}>Income</Col>
-                                                    <Col md={6}>Amount</Col>
+                                                    <Col md={4}>Income</Col>
+                                                    <Col md={4}>Amount</Col>
+                                                    <Col md={4}>TOTAL: <b>income</b></Col>
                                                 </Row>
 
 
@@ -175,8 +176,9 @@ class Tool extends Component {
                                         <Container>
                                             <Col>
                                                 <Row>
-                                                    <Col md={6}>Income</Col>
-                                                    <Col md={6}>Amount</Col>
+                                                    <Col md={4}>Income</Col>
+                                                    <Col md={4}>Amount</Col>
+                                                    <Col md={4}>TOTAL: <b>expense</b></Col>
                                                 </Row>
 
 
