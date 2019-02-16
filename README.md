@@ -65,23 +65,18 @@ yarn start
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+For testing we recommend to use Postman app, other than that please refer to the folder -scripts- and run our seed.js from Yarn
 
 ### Break down into end to end tests
 
-Explain what these tests test and why
+Yarn seed will update 1 user complete information so you can see how the database is design in MongoDB, for a better understandment, we recommend the use of Robo 3T app.
 
 ```
-Give an example
+yarn seed
 ```
 
-### And coding style tests
 
-Explain what these tests test and why
 
-```
-Give an example
-```
 
 ## Deployment
 
