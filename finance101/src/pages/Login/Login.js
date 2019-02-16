@@ -9,7 +9,8 @@ class Login extends Component {
         email: "",
         pasword: "",
         isAuthenticated: false,
-        modalShow: false
+        modalShow: false,
+        register: false
     };
 
 
@@ -43,6 +44,14 @@ class Login extends Component {
             return <Redirect to='/tool' />
         }
     }
+    goToRegis = () => {
+        this.setState({ register: true })
+    }
+    renderRedirectRegis = () => {
+        if (this.state.register) {
+            return <Redirect to='/register' />
+        }
+    }
 
     render() {
         let modalClose = () => this.setState({ modalShow: false });
@@ -52,6 +61,7 @@ class Login extends Component {
                     show={this.state.modalShow}
                     onHide={modalClose}
                 />
+                {this.renderRedirectRegis()}
                 {this.renderRedirect()}
                 <form class="form-signin">
                     <h1 class="h3 mb-3 font-weight-normal">User Login</h1>
@@ -64,16 +74,16 @@ class Login extends Component {
                         <Form.Control onChange={this.handleInputChange} name={"password"} value={this.state.password} type="password" placeholder="Password" />
                     </Form.Group>
                     <div className="row">
-                    <div className="col-md-6">
-                    <Button onClick={this.login} variant="primary" type="submit">
-                        Login
+                        <div className="col-md-6">
+                            <Button onClick={this.login} variant="primary" type="submit">
+                                Login
                     </Button>
-                    </div>
-                    <div className="col-md-6">
-                    <Button variant="success">
-                        Register
+                        </div>
+                        <div className="col-md-6">
+                            <Button onClick={this.goToRegis} variant="success">
+                                Register
                     </Button>
-                    </div>
+                        </div>
                     </div>
                 </form>
 

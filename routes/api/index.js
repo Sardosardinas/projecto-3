@@ -66,7 +66,7 @@ router.route("/userData")
 router.route("/updateIncome")
     .put((req, res) => {
         console.log(req.body)
-        Console.log("Update income")
+        console.log("Update income")
         if (req.user) {
             db.User.updateOne({ "income._id": req.body._id }, { $set: { "income.$.title": req.body.title, "income.$.amount": req.body.amount } })
                 .then(function (dbUserSavings) {
