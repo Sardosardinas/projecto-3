@@ -120,7 +120,8 @@ class Tool extends Component {
                                 handleSave={this.handleSave}
 
                             />
-
+                            <div className="row">
+                            <div className="col-md-6">
                             {!this.state.income.length ? (
                                 <React.Fragment>
                                     <Container>
@@ -132,7 +133,7 @@ class Tool extends Component {
                             ) : (
                                     <React.Fragment>
                                         <Container>
-                                            <Col md={6}>
+                                            <Col>
                                                 <Row>
                                                     <Col md={6}>Income</Col>
                                                     <Col md={6}>Amount</Col>
@@ -157,7 +158,8 @@ class Tool extends Component {
                                         </Container>
                                     </React.Fragment>
                                 )}
-
+                            </div>
+                            <div className="col-md-6">                          
                             {!this.state.income.length ? (
                                 <React.Fragment>
                                     <Container>
@@ -171,7 +173,7 @@ class Tool extends Component {
                             ) : (
                                     <React.Fragment>
                                         <Container>
-                                            <Col md={6}>
+                                            <Col>
                                                 <Row>
                                                     <Col md={6}>Income</Col>
                                                     <Col md={6}>Amount</Col>
@@ -196,6 +198,8 @@ class Tool extends Component {
                                         </Container>
                                     </React.Fragment>
                                 )}
+                                </div>  
+                            </div>
 
 
 
