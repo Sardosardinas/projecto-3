@@ -6,11 +6,8 @@
   "proxy": "http://localhost:3001/",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
-<<<<<<< HEAD
     "js-cookie": "^2.2.0",
     "js-cookies": "^1.0.4",
-=======
->>>>>>> 271e31328e4c88794e71bf73f7834884c0cf8d2a
     "react": "^16.8.1",
     "react-bootstrap": "^1.0.0-beta.5",
     "react-dom": "^16.8.1",
