@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import { Button, Form } from "react-bootstrap"
 import API from "../../utils/API"
 import { Redirect } from "react-router-dom"
+import MyVerticallyCenteredModal from "../../components/IncorrectPassword"
 class Login extends Component {
 
     state = {
         email: "",
         pasword: "",
-        isAuthenticated: false
+        isAuthenticated: false,
+        modalShow: true
     };
 
 
@@ -37,9 +39,13 @@ class Login extends Component {
     }
 
     render() {
-
+        let modalClose = () => this.setState({ modalShow: false });
         return (
             <div>
+                          <MyVerticallyCenteredModal
+            show={this.state.modalShow}
+            onHide={modalClose}
+          />
                 {this.renderRedirect()}
                 <form class="form-signin">
                     <h1 class="h3 mb-3 font-weight-normal">User Login</h1>
